@@ -76,7 +76,7 @@ extension Script {
         }
         
         let datasource = ScriptsDataSource()
-        guard !isBuiltIn, let url = try? Constants.getBookmarkURL() else {
+        guard !isBuiltIn, let url = try? BookmarkHelper.getBookmarkURL() else {
             // For now, built in scripts can't import custom stuff.
             return nil
         }

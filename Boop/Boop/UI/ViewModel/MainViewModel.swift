@@ -196,11 +196,11 @@ import SavannaKit
     // MARK: - Links
     
     func openHelp() {
-        open(url: "https://boop.okat.best/docs/")
+        OpenURLHelper.open(url: "https://boop.okat.best/docs/")
     }
     
     func openScripts() {
-        open(url: "https://boop.okat.best/scripts/")
+        OpenURLHelper.open(url: "https://boop.okat.best/scripts/")
     }
     
     func checkForUpdates() {
@@ -211,14 +211,6 @@ import SavannaKit
                 statusEvent.send(.success("Boop is up to date!"))
             }
         }
-    }
-    
-    private func open(url: String) {
-        guard let url = URL(string: url) else {
-            assertionFailure("Could not generate URL.")
-            return
-        }
-        NSWorkspace.shared.open(url)
     }
     
 }

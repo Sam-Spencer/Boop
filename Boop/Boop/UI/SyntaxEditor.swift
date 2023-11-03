@@ -38,5 +38,8 @@ struct SyntaxEditor: NSViewRepresentable {
 }
 
 #Preview {
-    SyntaxEditor(viewModel: MainViewModel(), text: .constant("Quis dolor labore enim mollit ut est anim in consectetur. Cupidatat amet cillum tempor magna sint mollit. Incididunt laborum sit enim tempor sit qui velit id ea cillum ex do. Officia id sunt veniam duis ad enim deserunt reprehenderit veniam excepteur voluptate laboris occaecat sit ex. Irure adipisicing veniam dolor eu irure duis. Laboris elit commodo aute elit dolore in do deserunt."))
+    SyntaxEditor(
+        viewModel: MainViewModel(),
+        text: .constant("Quis dolor labore enim mollit ut est anim in consectetur. Cupidatat amet cillum tempor magna sint mollit. Incididunt laborum sit enim tempor sit qui velit id ea cillum ex do. Officia id sunt veniam duis ad enim deserunt reprehenderit veniam excepteur voluptate laboris occaecat sit ex. Irure adipisicing veniam dolor eu irure duis. Laboris elit commodo aute elit dolore in do deserunt.")
+    )
 }

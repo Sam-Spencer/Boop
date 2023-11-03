@@ -28,7 +28,7 @@ actor ScriptsRepository: ScriptsRepositoryProtocol {
     }
     
     func loadUserScripts(callbacks: ScriptCallbacks?) async throws -> [Script] {
-        guard let url = try Constants.getBookmarkURL() else { throw ScriptError.invalidBookmark }
+        guard let url = try BookmarkHelper.getBookmarkURL() else { throw ScriptError.invalidBookmark }
         let urls = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
         var loadedScripts: [Script] = []
         try await urls.asyncForEach { url in

@@ -10,6 +10,8 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @StateObject private var viewModel = SettingsViewModel()
+    
     @AppStorage("boopColorScheme") var appearanceSetting = BoopColorScheme.system
     @AppStorage("scriptsFolderPath") var userPath = ""
     
@@ -63,17 +65,25 @@ struct SettingsView: View {
                         switch result {
                         case .success(let url): 
                             userPath = url.absoluteString
-                            try? Constants.setBookmarkData(url: url)
+                            try? BookmarkHelper.setBookmarkData(url: url)
                         case .failure(let error):
                             print(error)
                         }
                     }
+                }
+                Divider()
+                HStack {
+                    HelpButton {
+                        viewModel.openScriptHelp()
+                    }
+                    Spacer()
                 }
             }
             .padding()
             Spacer()
         }
     }
+    
 }
 
 #Preview {
