@@ -14,9 +14,12 @@ import SavannaKit
 @MainActor class MainViewModel: ObservableObject {
     
     @Published var viewState = MainViewState()
-    @Published var statusEvent = PassthroughSubject<Status, Never>()
+    
     @Published var scripts: [Script] = []
     @Published var selectedIndex: Int?
+    
+    @Published var statusEvent = PassthroughSubject<Status, Never>()
+    var statusQueue: [Status] = []
     
     private var editorView: SyntaxTextView?
     private var allScripts: [Script] = []
@@ -44,12 +47,12 @@ import SavannaKit
     func setupCallbacks() {
         infoCallback = { [weak self] info in
             guard let self = self else { return }
-            self.statusEvent.send(.info(info))
+            self.updateStatus(to: .info(info))
         }
         
         errorCallback = { [weak self] error in
             guard let self = self else { return }
-            self.statusEvent.send(.error(error))
+            self.updateStatus(to: .error(error))
         }
     }
     
@@ -66,12 +69,12 @@ import SavannaKit
     
     func openPicker() {
         viewState.pickerOpen = true
-        statusEvent.send(.help("Select your action"))
+        updateStatus(to: .help("Select your action"))
     }
     
     func closePicker() {
         viewState.pickerOpen = false
-        statusEvent.send(.normal)
+        updateStatus(to: .normal)
     }
     
     func setEditorView(_ view: SyntaxTextView) {
@@ -206,9 +209,43 @@ import SavannaKit
     func checkForUpdates() {
         Task {
             if let version = try await updateScript.execute() {
-                statusEvent.send(.updateAvailable(version.link))
+                updateStatus(to: .updateAvailable(version.link))
             } else {
-                statusEvent.send(.success("Boop is up to date!"))
+                updateStatus(to: .success("Boop is up to date!"))
+            }
+        }
+    }
+    
+    // MARK: - Status
+    
+    private func updateStatus(to newStatus: Status) {
+        switch newStatus {
+        case .normal, .updateAvailable, .help:
+            statusQueue.removeAll()
+            statusEvent.send(newStatus)
+        default:
+            statusQueue.append(newStatus)
+            processStatusUpdate()
+        }
+    }
+    
+    @MainActor private func processStatusUpdate() {
+        guard statusQueue.isEmpty == false else {
+            statusEvent.send(.normal)
+            return
+        }
+        
+        let next = statusQueue.removeFirst()
+        statusEvent.send(next)
+        
+        Task {
+            var currentDelay = UserDefaults.standard.integer(forKey: Constants.userPreferenceMessageDelay)
+            if currentDelay < 1 {
+                currentDelay = 10
+            }
+            try await Task.sleep(for: .seconds(currentDelay))
+            await MainActor.run {
+                processStatusUpdate()
             }
         }
     }

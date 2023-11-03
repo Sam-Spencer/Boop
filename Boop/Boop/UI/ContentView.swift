@@ -15,6 +15,7 @@ struct ContentView: View {
     
     @State private var showPicker: Bool = false
     @State private var statusText: String = ""
+    @State private var statusColor: Color = Color.Boop.normal
     
     var body: some View {
         SyntaxEditor(
@@ -27,14 +28,21 @@ struct ContentView: View {
                     .padding(.vertical, 6)
                     .padding(.horizontal, 12)
                     .background(
-                        Material.thickMaterial,
+                        statusColor,
                         in: RoundedRectangle(cornerRadius: 6)
                     )
+                    .contentTransition(.interpolate)
             }
         }
         .onReceive(viewModel.$viewState) { newState in
             showPicker = newState.pickerOpen
             statusText = newState.statusText
+        }
+        .onReceive(viewModel.statusEvent) { statusEvent in
+            withAnimation(.easeInOut(duration: 0.4)) {
+                statusText = statusEvent.displayValue()
+                statusColor = statusEvent.color() ?? Color.Boop.normal
+            }
         }
         .overlay {
             if showPicker {

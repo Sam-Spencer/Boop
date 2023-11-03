@@ -14,6 +14,7 @@ struct SettingsView: View {
     
     @AppStorage("boopColorScheme") var appearanceSetting = BoopColorScheme.system
     @AppStorage("scriptsFolderPath") var userPath = ""
+    @AppStorage("messageDelay") var messageDelay: Double = 10
     
     @State private var isSelectingDirectory: Bool = false
     
@@ -25,7 +26,7 @@ struct SettingsView: View {
                 }
             colorScheme
                 .tabItem {
-                    Label("Colors", systemImage: "paintpalette")
+                    Label("Appearance", systemImage: "paintpalette")
                 }
         }
         .frame(width: 380, height: 200)
@@ -42,6 +43,9 @@ struct SettingsView: View {
                     }
                 } label: {
                     Text("Color Scheme")
+                }
+                Slider(value: $messageDelay, in: 1...20, step: 1.0) {
+                    Text("Status Message Delay")
                 }
             }
             .padding()

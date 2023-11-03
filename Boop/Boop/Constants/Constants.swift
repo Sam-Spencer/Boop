@@ -22,6 +22,10 @@ struct Constants {
     ///
     static let userPreferencesSchemeKey = "boopColorScheme"
     
+    /// Defaults key for the duration status messages are shown
+    /// 
+    static let userPreferenceMessageDelay = "messageDelay"
+    
     /// "https://boop.okat.best/docs/scripts"
     ///
     static let helpURL = "https://boop.okat.best/docs/scripts"

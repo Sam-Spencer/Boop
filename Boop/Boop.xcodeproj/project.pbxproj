@@ -12,12 +12,10 @@
 		2C17C66A24271DDA005C911C /* BoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C17C66924271DDA005C911C /* BoopTests.swift */; };
 		2C17C67224271EBD005C911C /* ScriptManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C17C67124271EBD005C911C /* ScriptManagerTests.swift */; };
 		2C17C6772427214D005C911C /* ScriptExecution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C53B6DF226D404E00DC6861 /* ScriptExecution.swift */; };
-		2C17C67B2427218B005C911C /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20669921FD76900082570E /* StatusView.swift */; };
 		2C17C67C242721C5005C911C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9118B523406B530018916F /* Colors.swift */; };
 		2C20667821FD62910082570E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C20667721FD62910082570E /* Assets.xcassets */; };
 		2C20669121FD64A20082570E /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20668F21FD64A20082570E /* DefaultTheme.swift */; };
 		2C20669521FD6F400082570E /* BoopLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20669321FD6F400082570E /* BoopLexer.swift */; };
-		2C20669A21FD76900082570E /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20669921FD76900082570E /* StatusView.swift */; };
 		2C20669C21FE3E060082570E /* BoopToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20669B21FE3E060082570E /* BoopToken.swift */; };
 		2C53B6E0226D404E00DC6861 /* ScriptExecution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C53B6DF226D404E00DC6861 /* ScriptExecution.swift */; };
 		2C60A4A4248300CE006496BA /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C60A4A3248300CE006496BA /* AppVersion.swift */; };
@@ -29,7 +27,6 @@
 		2C60A54224871273006496BA /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20668F21FD64A20082570E /* DefaultTheme.swift */; };
 		2C60A54824871273006496BA /* BoopLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20669321FD6F400082570E /* BoopLexer.swift */; };
 		2C60A54924871273006496BA /* BoopToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20669B21FE3E060082570E /* BoopToken.swift */; };
-		2C60A54D24871273006496BA /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20669921FD76900082570E /* StatusView.swift */; };
 		2C60A54E24871273006496BA /* UpdateTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C60A4E524870678006496BA /* UpdateTextField.swift */; };
 		2C60A55524871273006496BA /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = 2C9761D42214E11600AFF8CD /* scripts */; };
 		2C60A55624871273006496BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C20667721FD62910082570E /* Assets.xcassets */; };
@@ -47,6 +44,10 @@
 		A623D31D2AF5630A00298A98 /* BookmarkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A623D31C2AF5630A00298A98 /* BookmarkHelper.swift */; };
 		A623D31E2AF5630A00298A98 /* BookmarkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A623D31C2AF5630A00298A98 /* BookmarkHelper.swift */; };
 		A623D3202AF5635000298A98 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A623D3132AF5613200298A98 /* HelpButton.swift */; };
+		A623D3222AF5649B00298A98 /* StatusBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A623D3212AF5649B00298A98 /* StatusBarState.swift */; };
+		A623D3232AF5649B00298A98 /* StatusBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A623D3212AF5649B00298A98 /* StatusBarState.swift */; };
+		A623D3252AF567ED00298A98 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A623D3242AF567ED00298A98 /* ColorConstants.swift */; };
+		A623D3262AF567ED00298A98 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A623D3242AF567ED00298A98 /* ColorConstants.swift */; };
 		A6E926C62AF3F20800465659 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E926C52AF3F20800465659 /* ContentView.swift */; };
 		A6E926C72AF3F20800465659 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E926C52AF3F20800465659 /* ContentView.swift */; };
 		A6E926C92AF3F2C500465659 /* BoopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E926C82AF3F2C500465659 /* BoopApp.swift */; };
@@ -158,7 +159,6 @@
 		2C20667D21FD62910082570E /* Boop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Boop.entitlements; sourceTree = "<group>"; };
 		2C20668F21FD64A20082570E /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		2C20669321FD6F400082570E /* BoopLexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoopLexer.swift; sourceTree = "<group>"; };
-		2C20669921FD76900082570E /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		2C20669B21FE3E060082570E /* BoopToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoopToken.swift; sourceTree = "<group>"; };
 		2C53B6DF226D404E00DC6861 /* ScriptExecution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptExecution.swift; sourceTree = "<group>"; };
 		2C5770D4249727A600B38470 /* BoopRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BoopRelease.entitlements; sourceTree = "<group>"; };
@@ -172,6 +172,8 @@
 		A623D3152AF5621000298A98 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		A623D3192AF562A100298A98 /* OpenURLHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenURLHelper.swift; sourceTree = "<group>"; };
 		A623D31C2AF5630A00298A98 /* BookmarkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkHelper.swift; sourceTree = "<group>"; };
+		A623D3212AF5649B00298A98 /* StatusBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarState.swift; sourceTree = "<group>"; };
+		A623D3242AF567ED00298A98 /* ColorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		A6E926C52AF3F20800465659 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A6E926C82AF3F2C500465659 /* BoopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoopApp.swift; sourceTree = "<group>"; };
 		A6E926CB2AF3F45700465659 /* SyntaxEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxEditor.swift; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 			children = (
 				A6E926CE2AF3F7BB00465659 /* MainViewModel.swift */,
 				A6E927082AF42DDE00465659 /* MainViewState.swift */,
+				A623D3212AF5649B00298A98 /* StatusBarState.swift */,
 				A623D3152AF5621000298A98 /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
@@ -319,7 +322,6 @@
 		2C20669821FD767E0082570E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2C20669921FD76900082570E /* StatusView.swift */,
 				2C60A4E524870678006496BA /* UpdateTextField.swift */,
 			);
 			path = Views;
@@ -416,6 +418,7 @@
 			isa = PBXGroup;
 			children = (
 				A6E9271C2AF435A000465659 /* Constants.swift */,
+				A623D3242AF567ED00298A98 /* ColorConstants.swift */,
 				A6E9271F2AF43B1300465659 /* KeyMappings.swift */,
 				A6E927252AF443BB00465659 /* BoopColorScheme.swift */,
 			);
@@ -578,7 +581,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C17C67224271EBD005C911C /* ScriptManagerTests.swift in Sources */,
-				2C17C67B2427218B005C911C /* StatusView.swift in Sources */,
 				2C17C67C242721C5005C911C /* Colors.swift in Sources */,
 				2C17C6772427214D005C911C /* ScriptExecution.swift in Sources */,
 				2C60A56224871730006496BA /* UpdateTextField.swift in Sources */,
@@ -597,6 +599,7 @@
 				2C0BC0DD24AAC518009B8631 /* Script+Require.swift in Sources */,
 				2C9118B623406B530018916F /* Colors.swift in Sources */,
 				2C9761DF2214E46800AFF8CD /* Script.swift in Sources */,
+				A623D3252AF567ED00298A98 /* ColorConstants.swift in Sources */,
 				A6E926F72AF41B7E00465659 /* RunScriptUseCase.swift in Sources */,
 				A6E926CF2AF3F7BB00465659 /* MainViewModel.swift in Sources */,
 				2C60A4A4248300CE006496BA /* AppVersion.swift in Sources */,
@@ -611,6 +614,7 @@
 				A6E926C62AF3F20800465659 /* ContentView.swift in Sources */,
 				A6E926D92AF40F0700465659 /* UpdateBuddyDataSource.swift in Sources */,
 				A6E926CC2AF3F45700465659 /* SyntaxEditor.swift in Sources */,
+				A623D3222AF5649B00298A98 /* StatusBarState.swift in Sources */,
 				A6E927132AF4309D00465659 /* CheckUpdatesUseCase.swift in Sources */,
 				A6E926E82AF4150700465659 /* ScriptsRepository.swift in Sources */,
 				A623D31D2AF5630A00298A98 /* BookmarkHelper.swift in Sources */,
@@ -623,7 +627,6 @@
 				A6E927262AF443BB00465659 /* BoopColorScheme.swift in Sources */,
 				A6E926E12AF413CA00465659 /* ScriptsDataSource.swift in Sources */,
 				A6E927032AF42BBE00465659 /* ScriptCallbacks.swift in Sources */,
-				2C20669A21FD76900082570E /* StatusView.swift in Sources */,
 				2C60A4E624870678006496BA /* UpdateTextField.swift in Sources */,
 				A6E927002AF42B8600465659 /* Script+Fuse.swift in Sources */,
 				A6E926FD2AF4257700465659 /* LoadScriptsUseCase.swift in Sources */,
@@ -646,6 +649,7 @@
 				2C0BC0DE24AAC64F009B8631 /* Script+Require.swift in Sources */,
 				2C60A54024871273006496BA /* Script.swift in Sources */,
 				2C60A54124871273006496BA /* AppVersion.swift in Sources */,
+				A623D3262AF567ED00298A98 /* ColorConstants.swift in Sources */,
 				A6E926F82AF41B7E00465659 /* RunScriptUseCase.swift in Sources */,
 				A623D3172AF5621700298A98 /* SettingsViewModel.swift in Sources */,
 				A6E926D02AF3F7BB00465659 /* MainViewModel.swift in Sources */,
@@ -660,6 +664,7 @@
 				A6E926C72AF3F20800465659 /* ContentView.swift in Sources */,
 				A6E926DA2AF40F0700465659 /* UpdateBuddyDataSource.swift in Sources */,
 				A6E926CD2AF3F45700465659 /* SyntaxEditor.swift in Sources */,
+				A623D3232AF5649B00298A98 /* StatusBarState.swift in Sources */,
 				A6E927142AF4309D00465659 /* CheckUpdatesUseCase.swift in Sources */,
 				A623D3202AF5635000298A98 /* HelpButton.swift in Sources */,
 				A6E926E92AF4150700465659 /* ScriptsRepository.swift in Sources */,
@@ -672,7 +677,6 @@
 				2C60A54924871273006496BA /* BoopToken.swift in Sources */,
 				A6E926E22AF413CA00465659 /* ScriptsDataSource.swift in Sources */,
 				A6E927042AF42BBE00465659 /* ScriptCallbacks.swift in Sources */,
-				2C60A54D24871273006496BA /* StatusView.swift in Sources */,
 				A6E927012AF42B8600465659 /* Script+Fuse.swift in Sources */,
 				A6E926FE2AF4257700465659 /* LoadScriptsUseCase.swift in Sources */,
 				A6E926F52AF41A0900465659 /* ReplacementRange.swift in Sources */,
