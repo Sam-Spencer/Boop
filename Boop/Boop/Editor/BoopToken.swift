@@ -11,8 +11,6 @@ import SavannaKit
 
 class BoopToken: Token, CustomStringConvertible {
     
-    
-    
     public enum TokenType: String {
         case comment
         case string
@@ -22,10 +20,12 @@ class BoopToken: Token, CustomStringConvertible {
         case extra
     }
     
-    // There is no support for placeholder yet or planned.
+    /// - important: There is no support for placeholder yet nor any planned.
+    ///
     var isEditorPlaceholder = false
     
-    // Plain tokens are not even parsed in the first place.
+    /// - note: Plain tokens are not even parsed in the first place.
+    ///
     var isPlain = false
     
     var isActive = true
@@ -40,10 +40,8 @@ class BoopToken: Token, CustomStringConvertible {
         self.isGreedy = greedy
     }
     
-
     var description: String {
         return type.rawValue
     }
-    
     
 }

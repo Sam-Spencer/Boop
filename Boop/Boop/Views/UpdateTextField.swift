@@ -14,7 +14,6 @@ class UpdateTextField: NSTextField {
     var link: String?
     
     override func awakeFromNib() {
-        
         self.attributedStringValue = NSAttributedString(string: "Learn More", attributes: [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -22,7 +21,6 @@ class UpdateTextField: NSTextField {
     
     override func resetCursorRects() {
         super.resetCursorRects()
-        
         self.addCursorRect(self.visibleRect, cursor: .pointingHand)
     }
     
@@ -30,7 +28,7 @@ class UpdateTextField: NSTextField {
         guard let link = link, let url = URL(string: link) else {
             return
         }
-        
         NSWorkspace.shared.open(url)
     }
+    
 }

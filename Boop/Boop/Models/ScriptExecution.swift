@@ -19,7 +19,6 @@ import JavaScriptCore
     func insert(_ newValue: String)
 }
 
-
 @objc class ScriptExecution: NSObject, ScriptExecutionJSExport {
     
     var isSelection: Bool
@@ -43,7 +42,7 @@ import JavaScriptCore
         get {
             return isSelection ? selection : fullText
         }
-        set{
+        set {
             if isSelection {
                 selection = newValue
             } else {
@@ -52,10 +51,10 @@ import JavaScriptCore
         }
     }
     
-    
     func postError(_ error: String) {
         self.script?.onScriptError(message: error)
     }
+    
     func postInfo(_ info: String) {
         self.script?.onScriptInfo(message: info)
     }
@@ -69,16 +68,14 @@ import JavaScriptCore
             let insertIndex = self.insertIndex, fullText != nil,
             let fullText = fullText,
             let range = Range(NSMakeRange(insertIndex, 0), in: fullText)
-         else {
+        else {
             self.fullText = newValue
             return
         }
         
         let point = fullText.index(range.lowerBound, offsetBy: self.insertOffset)
-
         self.fullText?.insert(contentsOf: newValue, at: point)
-        
         self.insertOffset += newValue.count
-        
     }
+    
 }

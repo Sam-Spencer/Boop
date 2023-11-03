@@ -1,0 +1,248 @@
+//
+//  MainViewModel.swift
+//  Boop
+//
+//  Created by Sam Spencer on 11/2/23.
+//  Copyright © 2023 OKatBest. All rights reserved.
+//
+
+import AppKit
+import Combine
+import Foundation
+import SavannaKit
+
+@MainActor class MainViewModel: ObservableObject {
+    
+    @Published var viewState = MainViewState()
+    @Published var statusEvent = PassthroughSubject<Status, Never>()
+    @Published var scripts: [Script] = []
+    @Published var selectedIndex: Int?
+    
+    private var editorView: SyntaxTextView?
+    private var allScripts: [Script] = []
+    
+    private var loadScripts = LoadScriptsUseCase()
+    private var searchScripts = SearchScriptsUseCase()
+    private var runScript = RunScriptUseCase()
+    private var updateScript = CheckUpdatesUseCase()
+    
+    private var infoCallback: ((String) -> Void)?
+    private var errorCallback: ((String) -> Void)?
+    
+    private var disposeBag = Set<AnyCancellable>()
+    
+    init() {
+        #if APPSTORE
+        viewState.showsUpdateToken = false
+        #endif
+        
+        setupObservers()
+        setupCallbacks()
+        load()
+    }
+    
+    func setupCallbacks() {
+        infoCallback = { [weak self] info in
+            guard let self = self else { return }
+            self.statusEvent.send(.info(info))
+        }
+        
+        errorCallback = { [weak self] error in
+            guard let self = self else { return }
+            self.statusEvent.send(.error(error))
+        }
+    }
+    
+    func setupObservers() {
+        statusEvent
+            .receive(on: RunLoop.main)
+            .sink { newStatus in
+                
+            }
+            .store(in: &disposeBag)
+    }
+    
+    // MARK: - Content
+    
+    func openPicker() {
+        viewState.pickerOpen = true
+        statusEvent.send(.help("Select your action"))
+    }
+    
+    func closePicker() {
+        viewState.pickerOpen = false
+        statusEvent.send(.normal)
+    }
+    
+    func setEditorView(_ view: SyntaxTextView) {
+        editorView = view
+        BoopServiceProvider.shared.updateEditor(view)
+    }
+    
+    func clearContent() {
+        guard let textView = editorView?.contentTextView else { return }
+        textView.textStorage?.beginEditing()
+        
+        let range = NSRange(location: 0, length: textView.textStorage?.length ?? textView.string.count)
+        guard textView.shouldChangeText(in: range, replacementString: "") else { return }
+        textView.textStorage?.replaceCharacters(in: range, with: "")
+        textView.textStorage?.endEditing()
+        textView.didChangeText()
+    }
+    
+    func executeScript(_ script: Script) {
+        guard let editorView else { return }
+        runScript.execute(script, into: editorView)
+    }
+    
+    func executeLastScript() {
+        guard let editorView else { return }
+        runScript.executeAgain(in: editorView)
+    }
+    
+    func load() {
+        Task {
+            do {
+                allScripts = try await loadScripts.execute(
+                    callbacks: ScriptCallbacks(
+                        infoCallback: infoCallback,
+                        errorCallback: errorCallback
+                    )
+                )
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func searchScripts(_ query: String) {
+        Task {
+            let results = await searchScripts.execute(with: query, in: allScripts)
+            scripts = results
+        }
+    }
+    
+    // MARK: - Navigation
+    
+    func manuallyUpdateSelection(to index: Int?) {
+        
+    }
+    
+    func observeKeyEvent(_ theEvent: NSEvent, searchIsFocused: Bool) -> (event: NSEvent?, searchFocus: Bool) {
+        var interceptedKeyEvent = false
+        
+        // ESCAPE
+        //
+        if theEvent.keyCode == KeyMappings.escapeKey.rawValue && viewState.pickerOpen {
+            closePicker()
+            interceptedKeyEvent = true
+        }
+        
+        // ENTER
+        //
+        if theEvent.keyCode == KeyMappings.enterKey.rawValue && viewState.pickerOpen {
+            guard let selectedIndex,
+                  scripts.count > selectedIndex,
+                  scripts.count > 0
+            else { return (theEvent, false) }
+            
+            executeScript(scripts[selectedIndex])
+            closePicker()
+            interceptedKeyEvent = true
+        }
+        
+        // TAB
+        //
+        if theEvent.keyCode == KeyMappings.tabKey.rawValue && viewState.pickerOpen {
+            if searchIsFocused {
+                selectedIndex = 0
+            }
+            interceptedKeyEvent = true
+        }
+        
+        // DOWN
+        //
+        if theEvent.keyCode == KeyMappings.arrowDownKey.rawValue {
+            if let selection = selectedIndex {
+                selectedIndex = selection < scripts.count ? selection + 1 : 0
+            } else {
+                selectedIndex = 0
+            }
+            interceptedKeyEvent = true
+        }
+        
+        // UP
+        //
+        if theEvent.keyCode == KeyMappings.arrowUpKey.rawValue {
+            if !searchIsFocused && selectedIndex == 0 {
+                selectedIndex = nil
+                return (theEvent, true)
+            } else {
+                if let selection = selectedIndex {
+                    selectedIndex = selection > 1 ? selection - 1 : 0
+                } else {
+                    selectedIndex = 0
+                }
+            }
+            interceptedKeyEvent = true
+        }
+        
+        guard interceptedKeyEvent else { return (theEvent, true) }
+        
+        // Return an empty event to avoid the 'Funk' sound
+        return (nil, false)
+    }
+    
+    // MARK: - Links
+    
+    func openHelp() {
+        open(url: "https://boop.okat.best/docs/")
+    }
+    
+    func openScripts() {
+        open(url: "https://boop.okat.best/scripts/")
+    }
+    
+    func checkForUpdates() {
+        Task {
+            if let version = try await updateScript.execute() {
+                statusEvent.send(.updateAvailable(version.link))
+            } else {
+                statusEvent.send(.success("Boop is up to date!"))
+            }
+        }
+    }
+    
+    private func open(url: String) {
+        guard let url = URL(string: url) else {
+            assertionFailure("Could not generate URL.")
+            return
+        }
+        NSWorkspace.shared.open(url)
+    }
+    
+}
+
+extension MainViewModel: SyntaxTextViewDelegate {
+    
+    func theme(for appearance: NSAppearance) -> SyntaxColorTheme {
+        return DefaultTheme(appearance: appearance)
+    }
+    
+    func didChangeText(_ syntaxTextView: SyntaxTextView) {
+        
+    }
+    
+    func didChangeSelectedRange(_ syntaxTextView: SyntaxTextView, selectedRange: NSRange) {
+        
+    }
+    
+    func didChangeFont(_ font: Font) {
+        
+    }
+    
+    func lexerForSource(_ source: String) -> Lexer {
+        return BoopLexer()
+    }
+    
+}

@@ -8,17 +8,7 @@
 
 import Cocoa
 
-enum Status {
-    case normal
-    case updateAvailable(String)
-    case help(String)
-    case info(String)
-    case error(String)
-    case success(String)
-}
-
-@IBDesignable
-class StatusView: NSView {
+@IBDesignable class StatusView: NSView {
     
     let transitionLength = 0.3
     let messageLength = 10.0
@@ -30,19 +20,15 @@ class StatusView: NSView {
     var running = false
     var current = Status.normal
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         self.wantsLayer = true
-        
         self.layer?.backgroundColor = ColorPair.normal.value(for: self.effectiveAppearance).cgColor
         self.layer?.cornerRadius = 5
-        
     }
 
     func setStatus(_ newStatus: Status) {
-        
         switch newStatus {
         case .normal, .help(_), .updateAvailable:
             // Skip the queue for those statuses
@@ -55,14 +41,10 @@ class StatusView: NSView {
             queue.append(newStatus)
             queueUpdated()
         }
-        
-        
     }
     
     func queueUpdated() {
-        guard !running else {
-            return
-        }
+        guard !running else { return }
         
         guard !queue.isEmpty else {
             running = false
@@ -87,28 +69,20 @@ class StatusView: NSView {
     }
     
     fileprivate func updateText(_ newStatus: Status) {
-        
         var text = ""
         
         self.updateLabel.isHidden = true
         
         switch newStatus {
-        case .help(let value):
-            text = value
-        case .info(let value):
-            text = value
-        case .error(let value):
-            text = value
-        case .success(let value):
-            text = value
-        case .normal:
-            text = "Press ⌘+B to get started"
+        case .help(let value): text = value
+        case .info(let value): text = value
+        case .error(let value): text = value
+        case .success(let value): text = value
+        case .normal: text = "Press ⌘+B to get started"
         case .updateAvailable(let link):
-            text = "New version available! "
-        
+            text = "New version available!"
             self.updateLabel.isHidden = false
             self.updateLabel.link = link
-            
         }
         
         self.textLabel.stringValue = text
@@ -124,20 +98,14 @@ class StatusView: NSView {
     }
     
     fileprivate func updateColor(_ newStatus: Status) {
-        
         var color = ColorPair.normal
         
         switch newStatus {
-        case .normal, .help(_):
-            break
-        case .success(_):
-            color = ColorPair.green.swap
-        case .info(_):
-            color = ColorPair.blue.swap
-        case .error(_):
-            color = ColorPair.red.swap
-        case .updateAvailable:
-            color = ColorPair.purple
+        case .normal, .help(_): break
+        case .success(_): color = ColorPair.green.swap
+        case .info(_): color = ColorPair.blue.swap
+        case .error(_): color = ColorPair.red.swap
+        case .updateAvailable: color = ColorPair.purple
         }
         
         self.layer?.backgroundColor = color.value(for: self.effectiveAppearance).cgColor
@@ -146,4 +114,5 @@ class StatusView: NSView {
     override func viewDidChangeEffectiveAppearance() {
         self.updateColor(self.current)
     }
+    
 }

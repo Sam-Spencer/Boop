@@ -8,11 +8,15 @@
 
 import Foundation
 
+/// A container with ``Version`` manifests
+///
 struct VersionContainer: Codable {
     let mas: Version
     let standalone: Version
 }
 
+/// A Boop update version manifest
+///
 struct Version: Codable {
     let link: String
     let version: String

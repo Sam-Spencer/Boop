@@ -13,28 +13,18 @@ class ScriptsSettingsViewController: NSViewController {
 
     @IBAction func didClickBrowseButton(_ sender: Any) {
         let panel = NSOpenPanel()
-        
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false
-        
         panel.begin { result in
             do {
-                
-                guard let url = panel.url, result == NSApplication.ModalResponse.OK else {
-                        return
-                }
-                
-                UserDefaults.standard.set(url, forKey: ScriptManager.userPreferencesPathKey)
-                
-                try ScriptManager.setBookmarkData(url: url)
-                
+                guard let url = panel.url, result == NSApplication.ModalResponse.OK else { return }
+                UserDefaults.standard.set(url, forKey: Constants.userPreferencesPathKey)
+                try Constants.setBookmarkData(url: url)
             } catch let error {
                 print(error)
             }
-            
         }
-        
     }
     
     // Currently disabled since this is not Sandbox friendly...
@@ -48,16 +38,14 @@ class ScriptsSettingsViewController: NSViewController {
         guard alert.runModal() == .alertSecondButtonReturn else {
             return
         }
-        
-        
     }
     
     @IBAction func didClickHelpButton(_ sender: Any) {
-
-        guard let url = URL(string: "https://boop.okat.best/docs/scripts") else {
+        guard let url = URL(string: Constants.helpURL) else {
             assertionFailure("Could not generate help URL.")
             return
         }
         NSWorkspace.shared.open(url)
     }
+    
 }

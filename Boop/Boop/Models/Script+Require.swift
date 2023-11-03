@@ -15,26 +15,21 @@ extension Script {
     static private let moduleExt = ".js"
     
     func setupRequire(context: JSContext) {
-        let require: @convention(block) (String) -> (JSValue?) = {
-             [unowned self] path in
-            
+        let require: @convention(block) (String) -> (JSValue?) = { [unowned self] path in
             var path = path
             
             if !path.hasSuffix(Script.moduleExt) {
                 path += Script.moduleExt
             }
             
-            guard
-                let url = self.url(for: path),
-                let rawCode = try? String(contentsOf: url)
-            else {
+            guard let url = self.url(for: path), let rawCode = try? String(contentsOf: url) else {
                 return nil
             }
             
             // This is not ideal, I tried using native JSC bindings
             // but no luck getting it to play nice. TODO I guess?
             
-           let wrappedCode =
+            let wrappedCode =
 """
 /***********************************
 *     Start of Boop's wrapper      *
@@ -72,7 +67,6 @@ extension Script {
         }
         
         context.setObject(require, forKeyedSubscript: "require" as NSString)
-
     }
     
     private func url(for path: String) -> URL? {
@@ -81,15 +75,13 @@ extension Script {
             return Bundle.main.url(forResource: fileName, withExtension: Script.moduleExt, subdirectory: "scripts/lib")
         }
         
-        guard
-            !self.isBuiltInt,
-            let url = try? ScriptManager.getBookmarkURL()
-        else {
+        let datasource = ScriptsDataSource()
+        guard !isBuiltIn, let url = try? Constants.getBookmarkURL() else {
             // For now, built in scripts can't import custom stuff.
             return nil
         }
         
         return url.appendingPathComponent(path, isDirectory: false)
-                   
     }
+    
 }

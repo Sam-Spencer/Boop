@@ -1,6 +1,24 @@
 {
   "pins" : [
     {
+      "identity" : "collectionconcurrencykit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JohnSundell/CollectionConcurrencyKit.git",
+      "state" : {
+        "revision" : "b4f23e24b5a1bff301efc5e70871083ca029ff95",
+        "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "froggy",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nenosllc/Froggy.git",
+      "state" : {
+        "revision" : "9fdc57408c9ef6d1d9f0fc611c252e62237c9b19",
+        "version" : "1.1.0"
+      }
+    },
+    {
       "identity" : "fuse-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/IvanMathy/fuse-swift",
@@ -12,10 +30,10 @@
     {
       "identity" : "savannakit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/IvanMathy/savannakit",
+      "location" : "https://github.com/Sam-Spencer/savannakit.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "bb51ee074152a7361e7085d10723f699c79fe673"
+        "branch" : "feat/multilineEditing",
+        "revision" : "db37904870aec76408b9d64031d3e557763f65a5"
       }
     }
   ],
